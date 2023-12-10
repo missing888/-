@@ -1,64 +1,44 @@
-@@ -1,7 +1,5 @@
- com.hx.fanqie包
+# Shadowrocket: 2023-01-28 10:37:53
+[General]
+bypass-system = true
+skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, localhost, *.local, captive.apple.com
+tun-excluded-routes = 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.88.99.0/24, 192.168.0.0/16, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 255.255.255.255/32, 239.255.255.250/32
+dns-server = system
+ipv6 = true
+prefer-ipv6 = false
+dns-fallback-system = false
+dns-direct-system = false
+icmp-auto-reply = true
+always-reject-url-rewrite = false
+private-ip-answer = true
+# direct domain fail to resolve use proxy rule
+dns-direct-fallback-proxy = true
 
-导入 android.R.attr.classLoader
-导入 android.util.Log
-导入 de.robv.android.xposed.IXposedHookLoadPackage
-导入 de.robv.android.xposed.XC_MethodHook
-导入 de.robv.android.xposed.XposedBridge
-@@ -17,7 +15,6 @@ 类 AppHook : IXposeHookLoadPackage {
-            /* *
-             * 去广告 5.9.5版本去广告
-             */
+[Rule]
+#番茄去广告 348060452
+DOMAIN-KEYWORD,zijieapi,REJECT
+DOMAIN-KEYWORD,byteorge,REJECT
+DOMAIN-KEYWORD,bytegoofy,REJECT
+DOMAIN-KEYWORD,bytedance,REJECT
+DOMAIN-KEYWORD,snssdk,REJECT
+DOMAIN-KEYWORD,pangolin-sdk,REJECT
+DOMAIN-KEYWORD,ad-sign,REJECT
+DOMAIN-KEYWORD,fqnovelvod,REJECT
+DOMAIN-KEYWORD,mgsdk-sign,REJECT
+DOMAIN-KEYWORD,dig.bdurl.net,REJECT
+DOMAIN-KEYWORD,activity-ag.awemeughun.com,REJECT
+DOMAIN-KEYWORD,msync-im1-vip6-std.easemob.com,REJECT
+DOMAIN-KEYWORD,apd-pcdnwxlogin.teg.tencent-cloud.net,REJECT
+DOMAIN-KEYWORD,sf3-ttcdn-tos.pstatp.com,REJECT
+DOMAIN-KEYWORD,sf3-fe-tos.pglstatp-toutiao.com,REJECT-200
+DOMAIN-KEYWORD,skdisplay.jd.com,REJECT
+DOMAIN-KEYWORD,settings.ttwebview.com,REJECT
+# Final
+FINAL,DIRECT
 
-            尝试{
-                lpparam.classLoader.loadClass( " com.dragon.read.component.biz.impl.ge " )
-                XposeHelpers .findAndHookMethod( " com.dragon.read.component.biz.impl.ge " ,
-@@ -42,8 +39,6 @@ 类 AppHook : IXposeHookLoadPackage {
-            /* *
-             * 5.9.5 删除更新
-             */
+[Host]
+localhost = 127.0.0.1
 
-
-            尝试{
-                lpparam.classLoader.loadClass( " com.dragon.read.update.d " )
-                XposeHelpers .findAndHookMethod(
-@@ -90,7 +85,8 @@ 类 AppHook : IXposeHookLoadPackage {
-                XposeBridge .log( " com.dragon.read.component.biz.impl.he: ${e.message} " )
-
-            }
-//             5.9.9版本去更新
-
-//             5.9.9 、6.0.3版本去更新
-            尝试{
-                lpparam.classLoader.loadClass( " com.dragon.read.update.UpdateManager " )
-                XposeHelpers .findAndHookMethod(
-@@ -114,7 +110,28 @@ 类 AppHook : IXposeHookLoadPackage {
-
-            }
-
-            // 6.0.3 去广告
-            尝试{
-                lpparam.classLoader.loadClass( " com.dragon.read.component.biz.impl.ie " )
-                XposeHelpers .findAndHookMethod( " com.dragon.read.component.biz.impl.ie " ,
-                    lpparam.classLoader,
-                    “无广告”，
-                    字符串::类.java,
-                    对象 ： XC_MethodHook（）{
-                        @Throws(可抛出::类)
-                        重写 fun  beforeHookedMethod ( param :  MethodHookParam ) {
-                            超级.beforeHookedMethod(param)
-                        }
-
-                        @Throws(可抛出::类)
-                        重写 fun  afterHookedMethod ( param :  MethodHookParam ) {
-                            超级.afterHookedMethod(param)
-                        }
-                    })
-            } catch (e : 异常) {
-                XposeBridge .log( " com.dragon.read.component.biz.impl.ie: ${e.message} " )
-
-            }
-        }
-    }
-}
+[URL Rewrite]
+^https?://(www.)?g.cn https://www.google.com 302
+^https?://(www.)?google.cn https://www.google.com 302
